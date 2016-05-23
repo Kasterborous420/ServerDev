@@ -5,14 +5,15 @@
 #### imports ####
 #################
 
-from flask import render_template, Blueprint
+from flask import Flask, url_for
+app = Flask(__name__)
 
 
 ################
 #### config ####
 ################
 
-main_blueprint = Blueprint('main', __name__,)
+
 
 
 ################
@@ -20,10 +21,17 @@ main_blueprint = Blueprint('main', __name__,)
 ################
 
 
-@main_blueprint.route('/')
-def home():
-    return render_template('main/home.html')
+##@app.route('/', methods = ['GET', 'POST'])
+##def login():
+##    if request.method == 'POST' :
 
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'GET':
+        return render_template('index.html')
+
+if __name__ == '__main__':
+    app.run()
 
 @main_blueprint.route("/about/")
 def about():
