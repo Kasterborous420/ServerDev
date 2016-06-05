@@ -8,6 +8,7 @@ import json
 from flask import Flask, url_for, render_template, request, urllib
 app = Flask(__name__)
 
+
 dict['Words'] = response.urllib.urlopen("http://randomword.setgetgo.com/get.php")
 gamesWon = 0
 gamesLost = 0
@@ -33,28 +34,33 @@ def hello:
 
 @app.route('/new_game', methods = ['POST'])
 def new_game:
-    if request.method == 'POST':
-
+    global dict
+    if request.method == 'POST' :
         dict['word_length'] = len(response.urllib.urlopen("http://randomword.setgetgo.com/get.php"))
         return json.dump(dict)
 
 @app.route('/check_letter', methods = ['POST'])
 def check_letter:
     global dict
-    if request.method == 'POST';
-    dict['letter'] = len(dict["Words"])
+    if request.method == 'POST' :
+        string = len(dict["Words"])
+        text = request.form['guess']
+        for c in string:
+            if c == text :
+
+
 
 @app.route('/score', methods = ['GET'])
 def getScore:
-    print "Games Won" % gamesWon
-    print "Games Lost" % gamesLost
+    print "Games Won" %gamesWon
+    print "Games Lost" %gamesLost
 
 @app.route('/score', methods = ['DELETE'])
 def delScore:
     gamesWon = 0
     gamesLost = 0
-    print "Games Won" % gamesWon
-    print "Games Lost" % gamesLost
+    print "Games Won" %gamesWon
+    print "Games Lost" %gamesLost
 
 
 
