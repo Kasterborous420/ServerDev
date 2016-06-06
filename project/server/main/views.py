@@ -5,13 +5,20 @@
 #### imports ####
 #################
 import json
-from flask import Flask, url_for, render_template, request, urllib
+from flask import Flask
+from flask import url_for
+from flask import render_template
+from flask import request
+from flask import urllib
 app = Flask(__name__)
 
 
-dict['Words'] = response.urllib.urlopen("http://randomword.setgetgo.com/get.php")
 gamesWon = 0
 gamesLost = 0
+bad_guesses = 0
+game_state = ""
+return_string  = ""
+dict['Words']
 ################
 #### config ####
 ################
@@ -28,39 +35,101 @@ gamesLost = 0
 ##def login():
 ##    if request.method == 'POST' :
 
-@app.route('/')
-def hello:
-    return render_template(index.html)
+    @app.route('/')
+    def hello:
+        return render_template(index.html)
 
-@app.route('/new_game', methods = ['POST'])
-def new_game:
-    global dict
-    if request.method == 'POST' :
-        dict['word_length'] = len(response.urllib.urlopen("http://randomword.setgetgo.com/get.php"))
-        return json.dump(dict)
+    @app.route('/new_game', methods = ['POST'])
+    def new_game:
+        global dict
+        dict['Words'] = urllib.urlopen("http://randomword.setgetgo.com/get.php").read()
+        l['word_length'] = {'word_length': len(dict['Words'])}
 
-@app.route('/check_letter', methods = ['POST'])
-def check_letter:
-    global dict
-    if request.method == 'POST' :
-        string = len(dict["Words"])
-        text = request.form['guess']
-        for c in string:
-            if c == text :
+        game_state = "ONGOING"
+
+        for i in range (0, l):
+            word_state = word_state + "_"
 
 
+        return json.dump(l)
 
-@app.route('/score', methods = ['GET'])
-def getScore:
-    print "Games Won" %gamesWon
-    print "Games Lost" %gamesLost
+    @app.route('/check_letter', methods = ['POST'])
+    def check_letter:
+        global dict
+        json_request = json.loads(request.data)
+        guessLetter = json_request["guess"]
+        length = len(string)
+        return_string = ""
 
-@app.route('/score', methods = ['DELETE'])
-def delScore:
-    gamesWon = 0
-    gamesLost = 0
-    print "Games Won" %gamesWon
-    print "Games Lost" %gamesLost
+        wrong_guess = false
+        #set the return string to a bunch of underscores
+        #for c in string :
+        #    if c == json :
+        #        return_string = return_string + text
+        #    else :
+        #        return_string = return_string + "_"
+
+        # when the request comes in, handle it in a st
+        # Loop through the
+        if game_state = "ONGOING":
+            for i in range(0, length):
+                if word_state[i] == '_':
+                    if guessLetter == dict['Words'][i]:
+                        return_string[i] = guessLetter
+                        wrong_guess = false
+                    else:
+                        return_string[i] = '_'
+                        wrong_guess = true
+                else:
+                    return_string[i] = word_state[i]
+            word_state = return_string
+            if word_state == dict['Words']:
+                game_state = "WIN"
+
+            if wrong_guess = true:
+                bad_guesses += 1
+
+            if bad_guesses == 8:
+                game_state = "LOSE"
+
+
+            state['word_state'] = {'word_state' : word_state}
+            json.dumps(state)
+
+        elif game_state = "WIN" :
+            state['word_state'] = {'word_state' : word_state}
+            json.dumps(state)
+
+        elif game_state = "LOSE" :
+            state['word_state'] = {'word_state' : word_state}
+            json.dumps(state)
+
+
+            # Check if  word_state[i] is '_'
+                # Check if at this [i] in the dict['words'][i] == guessLetter
+                    # if so, return_string[i] = guessLetter
+                #else
+                    # return_string[i] = '_'
+            #else
+                # return_string[i] = word_state[i]
+
+        # word_state = return_string
+        #json dumpsthingyamagijhi
+
+
+
+
+
+
+
+
+@app.route('/score', methods = ['GET', 'DELETE'])
+def score:
+    if request.method == 'DELETE' :
+        gamesWon = 0
+        gamesLost = 0
+    return_response = {'games_won' : gamesWon, 'games_lost' : gamesLost}
+    return json.dumps(return_response)
 
 
 
