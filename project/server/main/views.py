@@ -61,7 +61,7 @@ dict['Words']
         length = len(string)
         return_string = ""
 
-        wrong_guess = false
+        wrong_guess = False
         #set the return string to a bunch of underscores
         #for c in string :
         #    if c == json :
@@ -71,15 +71,15 @@ dict['Words']
 
         # when the request comes in, handle it in a st
         # Loop through the
-        if game_state = "ONGOING":
+        if game_state == "ONGOING":
             for i in range(0, length):
                 if word_state[i] == '_':
                     if guessLetter == dict['Words'][i]:
                         return_string[i] = guessLetter
-                        wrong_guess = false
+                        wrong_guess = False
                     else:
                         return_string[i] = '_'
-                        wrong_guess = true
+                        wrong_guess = True
                 else:
                     return_string[i] = word_state[i]
             word_state = return_string
@@ -92,19 +92,11 @@ dict['Words']
             if bad_guesses == 8:
                 game_state = "LOSE"
 
+        elif game_state == "LOSE" :
+            state['answer'] = dict['words']
 
-            state['word_state'] = {'word_state' : word_state}
-            json.dumps(state)
-
-        elif game_state = "WIN" :
-            state['word_state'] = {'word_state' : word_state}
-            json.dumps(state)
-
-        elif game_state = "LOSE" :
-            state['word_state'] = {'word_state' : word_state}
-            json.dumps(state)
-
-
+state['word_state'] = word_state
+    return json.dumps(state)
             # Check if  word_state[i] is '_'
                 # Check if at this [i] in the dict['words'][i] == guessLetter
                     # if so, return_string[i] = guessLetter
